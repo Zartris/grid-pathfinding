@@ -373,6 +373,7 @@ Grid::Grid(const std::string &_map_file) : Graph(), map_file(_map_file) {
     }
 }
 
+
 bool Grid::existNode(int id) const {
     return 0 <= id && id < width * height && V[id] != nullptr;
 }
@@ -385,3 +386,71 @@ bool Grid::existNode(int x, int y) const {
 Node *Grid::getNode(int id) const { return V[id]; }
 
 Node *Grid::getNode(int x, int y) const { return getNode(y * width + x); }
+
+GridWithSpeed::GridWithSpeed(const std::vector<std::vector<int>> &grid_map,
+                             const std::vector<std::vector<int>> &edge_cost_moving_up,
+                             const std::vector<std::vector<int>> &edge_cost_moving_down,
+                             const std::vector<std::vector<int>> &edge_cost_moving_left,
+                             const std::vector<std::vector<int>> &edge_cost_moving_right) :
+        Graph(), edge_cost_moving_up(edge_cost_moving_up),
+        edge_cost_moving_down(edge_cost_moving_down), edge_cost_moving_left(edge_cost_moving_left),
+        edge_cost_moving_right(edge_cost_moving_right), grid_map(grid_map) {
+    auto start = Time::now();
+    // read map file
+    width = grid_map[0].size();
+    height = grid_map.size();
+
+    // create nodes
+    V = Nodes(width * height, nullptr);
+    for (int x = 0; x < grid_map.size(); ++x) {
+        for (int y = 0; y < grid_map[x].size(); ++y) {
+            // collision = 1, free = 0
+            if (grid_map[x][y] == 0) {
+                int id = width * y + x;
+                Node *v = new Node(id, x, y);
+                V[id] = v;
+            }
+        }
+    }
+    // create edges
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            if (!existNode(x, y)) continue;
+            Node *v = getNode(x, y);
+            // left
+            if (existNode(x - 1, y)) {
+                v->neighbor.push_back(getNode(x - 1, y));
+                v->neighbor_cost.push_back(edge_cost_moving_left[x - 1][y]);
+            }
+            // right
+            if (existNode(x + 1, y)) {
+                v->neighbor.push_back(getNode(x + 1, y));
+                v->neighbor_cost.push_back(edge_cost_moving_right[x + 1][y]);
+            }
+            // up
+            if (existNode(x, y - 1)) {
+                v->neighbor.push_back(getNode(x, y - 1));
+                v->neighbor_cost.push_back(edge_cost_moving_up[x][y - 1]);
+            }
+            // down
+            if (existNode(x, y + 1)) {
+                v->neighbor.push_back(getNode(x, y + 1));
+                v->neighbor_cost.push_back(edge_cost_moving_down[x][y + 1]);
+            }
+        }
+    }
+}
+
+
+bool GridWithSpeed::existNode(int id) const {
+    return 0 <= id && id < width * height && V[id] != nullptr;
+}
+
+bool GridWithSpeed::existNode(int x, int y) const {
+    return 0 <= x && x < width && 0 <= y && y < height &&
+           existNode(y * width + x);
+}
+
+Node *GridWithSpeed::getNode(int id) const { return V[id]; }
+
+Node *GridWithSpeed::getNode(int x, int y) const { return getNode(y * width + x); }
