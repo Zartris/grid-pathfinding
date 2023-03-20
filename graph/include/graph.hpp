@@ -6,7 +6,7 @@
 #include "node.hpp"
 
 using Path = std::vector<Node *>;    // < loc_i[0], loc_i[1], ... >
-
+using ImageMap = std::vector<std::vector<int>>;
 
 // Pure graph. Base class of Grid class.
 class Graph {
@@ -126,11 +126,11 @@ private:
 public:
     GridWithSpeed() {};
 
-    GridWithSpeed(const std::vector<std::vector<int>> &grid_map,
-                  const std::vector<std::vector<int>> &edge_cost_moving_up,
-                  const std::vector<std::vector<int>> &edge_cost_moving_down,
-                  const std::vector<std::vector<int>> &edge_cost_moving_left,
-                  const std::vector<std::vector<int>> &edge_cost_moving_right);
+    GridWithSpeed(const ImageMap &grid_map,
+                  const ImageMap &edge_cost_moving_up,
+                  const ImageMap &edge_cost_moving_down,
+                  const ImageMap &edge_cost_moving_left,
+                  const ImageMap &edge_cost_moving_right);
 
     ~GridWithSpeed() {};
 

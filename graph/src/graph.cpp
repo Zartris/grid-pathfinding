@@ -387,11 +387,11 @@ Node *Grid::getNode(int id) const { return V[id]; }
 
 Node *Grid::getNode(int x, int y) const { return getNode(y * width + x); }
 
-GridWithSpeed::GridWithSpeed(const std::vector<std::vector<int>> &grid_map,
-                             const std::vector<std::vector<int>> &edge_cost_moving_up,
-                             const std::vector<std::vector<int>> &edge_cost_moving_down,
-                             const std::vector<std::vector<int>> &edge_cost_moving_left,
-                             const std::vector<std::vector<int>> &edge_cost_moving_right) :
+GridWithSpeed::GridWithSpeed(const ImageMap &grid_map,
+                             const ImageMap &edge_cost_moving_up,
+                             const ImageMap &edge_cost_moving_down,
+                             const ImageMap &edge_cost_moving_left,
+                             const ImageMap &edge_cost_moving_right) :
         Graph(), edge_cost_moving_up(edge_cost_moving_up),
         edge_cost_moving_down(edge_cost_moving_down), edge_cost_moving_left(edge_cost_moving_left),
         edge_cost_moving_right(edge_cost_moving_right), grid_map(grid_map) {
