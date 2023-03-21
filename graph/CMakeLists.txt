@@ -13,4 +13,4 @@ endif ()
 target_compile_features(${LIBRARY_NAME} PUBLIC cxx_std_17)
 target_include_directories(${LIBRARY_NAME} INTERFACE ./include)
 
-install(TARGETS ${LIBRARY_NAME} EXPORT ${LIBRARY_NAME}-config)
+#install(TARGETS ${LIBRARY_NAME} EXPORT ${LIBRARY_NAME}-config)

@@ -20,6 +20,27 @@ struct Node {
 
     int getDegree() const;
 
+    [[nodiscard]] int getID() const {
+        return id;
+    };
+
+    [[nodiscard]] int getX() const {
+        return pos.x;
+    };
+
+    [[nodiscard]] int getY() const {
+        return pos.y;
+    };
+
+    [[nodiscard]] std::vector<Node *> getNeighbors() const {
+        return neighbor;
+    };
+
+    [[nodiscard]] std::vector<int> getNeighborCosts() const {
+        return neighbor_cost;
+    };
+
+
     int manhattanDist(const Node &node) const;
 
     int manhattanDist(const Node *const node) const;
