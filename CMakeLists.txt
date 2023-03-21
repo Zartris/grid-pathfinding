@@ -4,6 +4,6 @@ project(graph CXX)
 add_subdirectory(./graph)
 # format
 add_custom_target(clang-format
-  COMMAND clang-format -i
-  ../graph/include/*.hpp
-  ../graph/src/*.cpp)
+        COMMAND clang-format -i
+        ../graph/include/*.hpp
+        ../graph/src/*.cpp)
