@@ -84,6 +84,11 @@ public:
 class Grid : public Graph {
 private:
     std::string map_file;
+    std::vector<std::vector<int>> edge_cost_moving_up;
+    std::vector<std::vector<int>> edge_cost_moving_down;
+    std::vector<std::vector<int>> edge_cost_moving_left;
+    std::vector<std::vector<int>> edge_cost_moving_right;
+    std::vector<std::vector<int>> grid_map;
     int width;
     int height;
 
@@ -91,6 +96,12 @@ public:
     Grid() {};
 
     Grid(const std::string &_map_file);
+
+    Grid(const ImageMap &grid_map,
+         const ImageMap &edge_cost_moving_up,
+         const ImageMap &edge_cost_moving_down,
+         const ImageMap &edge_cost_moving_left,
+         const ImageMap &edge_cost_moving_right);
 
     ~Grid() {};
 
@@ -107,44 +118,6 @@ public:
     }
 
     std::string getMapFileName() const { return map_file; };
-
-    int getWidth() const { return width; }
-
-    int getHeight() const { return height; }
-};
-
-class GridWithSpeed : public Graph {
-private:
-    std::vector<std::vector<int>> edge_cost_moving_up;
-    std::vector<std::vector<int>> edge_cost_moving_down;
-    std::vector<std::vector<int>> edge_cost_moving_left;
-    std::vector<std::vector<int>> edge_cost_moving_right;
-    std::vector<std::vector<int>> grid_map;
-    int width;
-    int height;
-
-public:
-    GridWithSpeed() {};
-
-    GridWithSpeed(const ImageMap &grid_map,
-                  const ImageMap &edge_cost_moving_up,
-                  const ImageMap &edge_cost_moving_down,
-                  const ImageMap &edge_cost_moving_left,
-                  const ImageMap &edge_cost_moving_right);
-
-    ~GridWithSpeed() {};
-
-    bool existNode(int id) const;
-
-    bool existNode(int x, int y) const;
-
-    Node *getNode(int id) const;
-
-    Node *getNode(int x, int y) const;
-
-    int dist(const Node *const v, const Node *const u) const {
-        return v->manhattanDist(u);
-    }
 
     int getWidth() const { return width; }
 
